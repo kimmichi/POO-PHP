@@ -45,11 +45,17 @@
             $this->status = $st;
         }
 
-        public function abrirConta (){
-            if ($this->getsaldo() == 0) {
-                $this->setstatus(true);
-                
+        public function abrirConta ($ab){
+            $this->settipo($ab);
+            if ($ab=="cc"){
+                $this->setsaldo(50);
+
             }
+            elseif ($ab=="cp"){
+                $this->setsaldo(150);
+            }
+            $this->setstatus(true);
+
         }
 
         public function fecharConta(){
@@ -67,20 +73,39 @@
         }
 
         public function depositar($dep){
-            $this->saldo = $this->saldo + $dep;
+            if ($this->getstatus()){
+                $this->saldo = $this->saldo + $dep;
+            }
+            else{
+                echo "<p>Nao foi possivel depositar. Conta desativada</p>";
+            }
         }
 
         public function sacar($sac){
-            if($sac > $this->saldo){
-                print "saldo insuficiente";
-                echo "<br>";
+            if($this->getstatus()){
+                if($sac < $this->saldo ){
+                    $this->setsaldo($this->getsaldo() - $sac);
+                }
+                else{
+                    print "saldo insuficiente ";
+                    echo "<br>";
+                }
             }
             else{
-                $this->saldo = $this->saldo - $sac;
+                echo "Conta desativada";
             }
         }
         public function pagarMensal(){
-            $this->saldo = $this->saldo - 20;
+            if($this->getstatus()){
+                if($this->gettipo()=="cc"){
+                    $this->setsaldo($this->getsaldo()- 12);
+                }elseif ($this->gettipo()=="cp"){
+                    $this->setsaldo($this->getsaldo() - 50);
+                }
+            }
+            else{
+                echo "<p><b>nao pode cobrar mensalidade, conta inativa</b></p>";
+            }
         }
 
     }

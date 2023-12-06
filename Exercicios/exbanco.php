@@ -10,14 +10,15 @@
 
             require_once "Conta.php";
             $c1 = new Conta();
-            $c1->Conta(321,"cp","joao", 500000000000.50,true);
+            $c1->Conta(321,null,"Meioda", 0,false);
             //$c1->Conta(null,null,null,null);
             
-            $c1->depositar(1000);
-            $c1->sacar(5);
+            $c1->fecharconta();
+            $c1->depositar(4);
+            $c1->sacar(3);
             $c1->sacar(50000000000000);
             $c1->pagarMensal();
-            $c1->fecharconta();
+            $c1->abrirConta("cp");
 
             echo "<br>";
             print_r($c1);
