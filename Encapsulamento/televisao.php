@@ -9,9 +9,15 @@
             <?php
                 require_once "ControleRemoto.php";
                 $c1 = new ControleRemoto();
-                $c1->maisVolume();
-                print $c1->getVolume();
-            
+                print_r($c1);
+                //$c1->maisVolume();
+                //print $c1->getVolume();
+                //print $c1->abrirMenu();
+                //$c1->desligarMudo();
+                //$c1->ligarMudo();
+                //$c1->play();
+                //$c1->pause();
+
             
             
             ?>

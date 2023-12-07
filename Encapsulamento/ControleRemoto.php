@@ -6,29 +6,29 @@ class ControleRemoto implements Controlador {
     private $tocando;
 
     function __construct(){
-        $this->volume = 50;
-        $this->ligado = true;
+        $this->volume = 0;
+        $this->ligado = false;
         $this->tocando = false;
     }
 
-    public function getVolume(){
+    private function getVolume(){
         return $this->volume;
     }
-    public function setVolume($v){
+    private function setVolume($v){
         $this->volume = $v;
     }
     
-    public function getLigar(){
+    private function getLigado(){
         return $this->volume;
     }
-    public function setLigar($l){
+    private function setLigado($l){
         $this->ligar = $l;
     }
 
-    public function getTocando(){
+    private function getTocando(){
         return $this->tocando; 
     }
-    public function setTocando($t){
+    private  function setTocando($t){
         $this->tocando = $t;
     }
 
@@ -40,10 +40,10 @@ class ControleRemoto implements Controlador {
         $this->ligar = false;
     }   
     public function abrirMenu(){
-        echo "<p>esta ligado?</p> ". ($this->getLigar()?"SIM":"NAO");
+        echo "<p>esta ligado?</p> ". ($this->getLigado()?"SIM":"NAO");
         echo "<p>esta tocando?</p> ". ($this->getTocando()?"SIM":"NAO");
-        echo "<p>Volume:</p> ". $this->getVolume();
-        for ($i=0; $i <= $this->getVolume() ; $i+=10) { 
+        echo "<p>Volume:</p> ". $this->getVolume()." ";
+        for ($i=5 ; $i <= $this->getVolume() ; $i+=5) { 
             echo "|";
         }
         echo "<br>";
@@ -52,24 +52,40 @@ class ControleRemoto implements Controlador {
         echo "fechando menu";
     }
     public function maisVolume(){
-        echo ($this->getLigar())?$this->setVolume($this->getVolume() + 5):"TV Desligada";
+        echo ($this->getLigado())?$this->setVolume($this->getVolume() + 5):"TV Desligada";
 
     }
     public function menosVolume(){
-        echo ($this->getLigar())?$this->setVolume($this->getVolume() - 5):"TV Desligada";
+        echo ($this->getLigado())?$this->setVolume($this->getVolume() - 5):"TV Desligada";
 
     }
     public function ligarMudo(){
+        if ($this->getLigado() && $this->getVolume()>0){
+            $this->setVolume(0);
+            echo "<p>Mudo ligado ". $this->getVolume() ."</p>" ;
+        }
 
     }
     public function desligarMudo(){
+        if ($this->getLigado() && $this->getVolume() > 0){
+            $this->setVolume(50);
+            echo "<p>Mudo desligado ". $this->getVolume() ."</p>" ;
+
+        }
 
     }
     public function play (){
+        if($this->getLigado() && !$this->getTocando()){
+            $this->setTocando(true);
+            echo "Tocando on <br>";
+        }
 
     }
     public function pause(){
-
+        if($this->getLigado() && $this->getTocando()){
+            $this->setTocando(false);
+            echo "Tocando off <br>";
+        }
     }
 
 }
